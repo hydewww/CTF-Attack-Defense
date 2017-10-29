@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}ChalList{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Chal List</h1>
+</div>
+<div class="container main-container">
+    <table id="chalsborad" class="table table-striped">
+        <thead>
+            <tr>
+                <td><b>id</b></td>
+                <td><b>value</b></td>
+            </tr>
+        </thead>
+        <tbody>
+        {% for chal in chals %}
+            <tr>
+                <td><span>{{ chal.id }}</span></td>
+                <td><span>{{ chal.value }}</span></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="col-md-4">
+    {{ wtf.quick_form(form) }}
+</div>
+{% endblock %}

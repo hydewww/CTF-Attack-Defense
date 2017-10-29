@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}JoinTeam{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>JoinTeam</h1>
+</div>
+<div class="col-md-4">
+    {{ wtf.quick_form(form) }}
+    <br>
+    <p><a href="{{ url_for('auth.create_team') }}">Click here to create a new team.</a></p>
+</div>
+{% endblock %}

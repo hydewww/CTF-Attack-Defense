@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}SolveList{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Solve List</h1>
+</div>
+<div class="container main-container">
+    <table id="solvesborad" class="table table-striped">
+        <thead>
+            <tr>
+                <td><b>id</b></td>
+                <td><b>team_id</b></td>
+                <td><b>flag_id</b></td>
+                <td><b>flag_used</b></td>
+                <td><b>date</b></td>
+            </tr>
+        </thead>
+        <tbody>
+        {% for solve in solves %}
+            <tr>
+                <td><span>{{ solve.id }}</span></td>
+                <td><span>{{ solve.team_id }}</span></td>
+                <td><span>{{ solve.flag_id }}</span></td>
+                <td><span>{{ solve.flag_used }}</span></td>
+                <td><span>{{ solve.date }}</span></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
