@@ -12,17 +12,17 @@
         <thead>
             <tr>
                 <td><b>id</b></td>
-                <td><b>team_id</b></td>
-                <td><b>flag_id</b></td>
-                <td><b>flag_used</b></td>
-                <td><b>date</b></td>
+                <td><b>Team</b></td>
+                <td><b>Flag ID</b></td>
+                <td><b>Flag used</b></td>
+                <td><b>Date</b></td>
             </tr>
         </thead>
         <tbody>
         {% for solve in solves %}
             <tr>
                 <td><span>{{ solve.id }}</span></td>
-                <td><span>{{ solve.team_id }}</span></td>
+                <td><span>{{ solve.team_name }}</span></td>
                 <td><span>{{ solve.flag_id }}</span></td>
                 <td><span>{{ solve.flag_used }}</span></td>
                 <td><span>{{ solve.date }}</span></td>

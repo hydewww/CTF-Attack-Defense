@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %}ChalList{% endblock %}
 
@@ -28,9 +27,5 @@
         {% endfor %}
         </tbody>
     </table>
-</div>
-<br>
-<div class="col-md-4">
-    {{ wtf.quick_form(form) }}
 </div>
 {% endblock %}

@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect
 from . import admin
-from ..models import User, Team, Flag, Solve, Chal
+from ..models import User, Team, Flag, Solve, Chal, Role
 from flask_login import login_required, current_user
 from .. import db
 from ..decorators import admin_required
@@ -13,7 +13,7 @@ def chals():
     form = ChalForm()
     chals = Chal.query.all()
     if form.validate_on_submit():
-        chal = Chal(value=form.value.data)
+        chal = Chal(name=form.name.data, value=form.value.data, port=form.port.data)
         db.session.add(chal)
         db.session.commit()
         flash('Success.')
@@ -38,9 +38,9 @@ def flags():
         teams = Team.query.all()
         for chal in chals:
             for team in teams:
-                if not Flag.query.filter_by(team_id=team.id, chal_id=chal.id).first():
-                    flag = Flag(team_id=team.id,
-                                chal_id=chal.id)
+                if not Flag.query.filter_by(team_name=team.name, chal_name=chal.name).first():
+                    flag = Flag(team_name=team.name,
+                                chal_name=chal.name)
                     db.session.add(flag)
                     db.session.commit()
         flash("Done")

@@ -14,9 +14,9 @@
     <table id="chalsborad" class="table table-striped">
         <thead>
             <tr>
-                <td><b>Id</b></td>
-                <td><b>Team_id</b></td>
-                <td><b>Chal_id</b></td>
+                <td><b>ID</b></td>
+                <td><b>Team Name</b></td>
+                <td><b>Chal Name</b></td>
                 <td><b>Flag</b></td>
             </tr>
         </thead>
@@ -24,13 +24,12 @@
         {% for flag in flags %}
             <tr>
                 <td><span>{{ flag.id }}</span></td>
-                <td><span>{{ flag.team_id }}</span></td>
-                <td><span>{{ flag.chal_id }}</span></td>
+                <td><span>{{ flag.team_name }}</span></td>
+                <td><span>{{ flag.chal_name }}</span></td>
                 <td><span>{{ flag.flag_now }}</span></td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 </div>
-
 {% endblock %}

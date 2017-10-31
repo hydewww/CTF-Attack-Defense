@@ -23,12 +23,13 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="{{ url_for('main.teams') }}">Team</a></li>
-                <li><a href="{{ url_for('main.flag') }}">Flag</a></li>
+                <li><a href="{{ url_for('main.chals') }}">Chal</a></li>  
+                <li><a href="{{ url_for('main.flag') }}">Flag</a></li>              
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_admin() %}
-                <li><a href="{{ url_for('admin.chals') }}">Chals</a></li>
-                <li><a href="{{ url_for('admin.flags') }}">Flags</a></li>
+                <li><a href="{{ url_for('admin.chals') }}">Chal</a></li>                
+                <li><a href="{{ url_for('admin.flags') }}">Flag</a></li>
                 <li><a href="{{ url_for('admin.solves') }}">Solves</a></li>
                 {% endif %}
                 {% if current_user.is_authenticated %}
