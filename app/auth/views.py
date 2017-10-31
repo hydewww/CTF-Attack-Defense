@@ -67,7 +67,7 @@ def join_team():
             db.session.add(role)
             db.session.commit()
             flash('Join Success')
-            return url_for('main.index')
+            return redirect(url_for('main.index'))
         flash('Invalid Team key.')
     return render_template('auth/join_team.html', form=form)
 

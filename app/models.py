@@ -44,12 +44,6 @@ class User(UserMixin, db.Model):
             return True
         return False
 
-    # def join_team(self, team_id):
-    #     print("!!!!!!!!!!!!"+team_id)
-    #     self.team_id = team_id
-    #     db.session.add(self)
-    #     db.session.commit()
-
     def __repr__(self):
         return '<User %r>' % self.name
 
