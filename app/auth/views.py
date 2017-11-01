@@ -53,8 +53,9 @@ def register():
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)
 
-@login_required
+
 @auth.route('/join_team', methods=['GET', 'POST'])
+@login_required
 def join_team():
     form = JoinTeamForm()
     if form.validate_on_submit():
@@ -72,8 +73,8 @@ def join_team():
     return render_template('auth/join_team.html', form=form)
 
 
-@login_required
 @auth.route('/create_team', methods=['GET', 'POST'])
+@login_required
 def create_team():
     form = CreateTeamForm()
     if form.validate_on_submit():
