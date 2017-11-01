@@ -7,3 +7,8 @@ python manage.py shell
 python manage.py runserver
 ```
 
+# Dynamic Flag
+
+```
+python flagserver.py
+```
