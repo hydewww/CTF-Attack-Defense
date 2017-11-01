@@ -11,6 +11,12 @@
     <p>Your Team: {{ current_user.team.name }}</p>
     <p>Team Key: {{ current_user.team.key }}</p>
     <p>Team Score: {{ current_user.team.score }}</p>
+    <br>
+    <div><b>Team Members:</b> 
+        {% for member in members %}
+            {{ member.user }}
+        {% endfor %}
+    </div>
     {% endif %}
 </div>
 {% endblock %}

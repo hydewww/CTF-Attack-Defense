@@ -10,19 +10,19 @@
     <table id="teamsboard" class="table table-striped">
         <thead>
             <tr>
+                <td><b>ID</b></td>
                 <td><b>Name</b></td>
                 <td><b>IP</b></td>
-                <td><b>Score</b></td>
             </tr>
         </thead>
         <tbody>
         {% for team in teams %}
             <tr>
+                <td><span>{{ loop.index }}</span></td>
                 <td>
                     <a href="{{ request.script_root }}/team/{{ team.id }}">{{ team.name }}</a>
                 </td>
                 <td><span>{{ team.ip }}</span></td>
-                <td><span>{{ team.score }}</span></td>
             </tr>
         {% endfor %}
         </tbody>

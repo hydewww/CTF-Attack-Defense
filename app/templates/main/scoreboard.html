@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}CTF{% endblock %}
+
+{% block page_content %}
+<div id="score-graph">
+    <div class="text-center">
+        <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw spinner"></i>
+    </div>
+</div>
+<br>
+<div class="container main-container">
+    <table id="teamsboard" class="table table-striped">
+        <thead>
+            <tr>
+                <td><b>No</b></td>
+                <td><b>Name</b></td>
+                <td><b>Score</b></td>
+            </tr>
+        </thead>
+        <tbody>
+        {% for team in teams %}
+            <tr>
+                <td><span>{{ loop.index }}</span></td>
+                <td>
+                    <a href="{{ request.script_root }}/team/{{ team.id }}">{{ team.name }}</a>
+                </td>
+                <td><span>{{ team.score }}</span></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript">
+    var script_root = "{{ request.script_root }}";
+</script>
+<script src="/static/js/vendor/moment.min.js"></script>
+<script src="/static/js/vendor/handlebars.min.js"></script>
+<script src="/static/js/vendor/plotly.min.js"></script>
+<script src="/static/js/utils.js"></script>
+<script src="/static/js/scoreboard.js"></script>
+{% endblock %}
