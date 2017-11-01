@@ -40,9 +40,6 @@ def logout():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        # admin = False
-        # if not User.query.first():
-        #     admin = True
         user = User(name=form.username.data,
                     password=form.password.data,
                     stu_id=form.stu_id.data
