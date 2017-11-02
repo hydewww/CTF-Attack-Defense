@@ -40,7 +40,7 @@ def flag():
     if form.validate_on_submit():
         team = Team.query.filter_by(name=form.team_name.data).first()
         flag = Flag.query.filter_by(flag_now=form.flag.data).first()
-        if team != None and flag != None:
+        if team != None and flag != None and flag.team_name != team.name:
             used = Solve.query.filter_by(flag_used=flag.flag_now, team_name=team.name).first()
             if used == None:
                 solve = Solve(  team_name=team.name,
