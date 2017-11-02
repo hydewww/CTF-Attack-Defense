@@ -34,4 +34,4 @@ python timing.py
 
 ---
 
-**说明: Scoreboard趋势图代码基于 [CTFd](https://github.com/CTFd/CTFd) **
+**说明: Scoreboard趋势图代码基于 [CTFd](https://github.com/CTFd/CTFd)**
