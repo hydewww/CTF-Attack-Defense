@@ -4,8 +4,10 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 import time, os, hashlib
 import sqlite3
 
+PENALTY = 20
 Teams = {}
-Chals = []
+Chals = {}
+
 
 def init():
     conn = sqlite3.connect('data.sqlite' ,check_same_thread = False)
@@ -17,13 +19,14 @@ def init():
     for team in teams:
         Teams[team[0]] = team[1]
 
-    cursor.execute( " SELECT name FROM chals ")
+    cursor.execute( " SELECT name, port FROM chals ")
     chals = cursor.fetchall()
     for chal in chals:
-        Chals.append(chal[0])
+        Chals[chal[0]] = chal[1]
 
     cursor.close()
     conn.close()
+
 
 def getFlag(ip, chal):
     stime = int(time.time()) // 10
@@ -32,12 +35,13 @@ def getFlag(ip, chal):
     flag = "flag{" + md5[15:25] + "}"
     return flag
 
+
 def updateFlag():
     conn = sqlite3.connect('data.sqlite', check_same_thread = False)
     cursor = conn.cursor()
 
     for team, ip in Teams.items():
-        for chal in Chals:
+        for chal in Chals.keys():
             flag_next = getFlag(ip, chal)
             cursor.execute( " UPDATE flags " +
                             " SET flag_now = '" + flag_next + "' " +
@@ -48,6 +52,35 @@ def updateFlag():
     cursor.close()
     conn.commit()
     conn.close()
+
+
+def pwnCheck(ip, port):
+    return 0
+
+
+def checkService():
+    conn = sqlite3.connect('data.sqlite', check_same_thread = False)
+    cursor = conn.cursor()
+
+    for team, ip in Teams.items():
+
+        count = pwnCheck(ip, int(Chals['pwn']))
+
+        if count:
+            cursor.execute( " SELECT score FROM teams " +
+                            " WHERE team_name = '" + team + "' "
+                            )
+            score = int(cursor.fetchone()[0])
+            score -= count * PENALTY
+            cursor.execute( " UPDATE teams " +
+                            " SET score = " + str(score) + " " +
+                            " WHERE team_name = '" + team + "' "
+                            )
+
+    cursor.close()
+    conn.commit()
+    conn.close()
+
 
 init()
 #sched = BackgroundScheduler()
