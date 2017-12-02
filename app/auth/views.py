@@ -1,13 +1,16 @@
-from flask import render_template, redirect, request, url_for, flash
+from flask import render_template, redirect, request, url_for, flash, current_app
 from flask_login import login_user, logout_user, login_required, \
     current_user
 from . import auth
 from .. import db
 from ..models import User, Team, Flag, Solve, Chal, Role
 from .forms import LoginForm, RegistrationForm, JoinTeamForm, CreateTeamForm
-import urllib.parse
+try:
+    import urllib.parse
+except:
+    from urlparse import urlparse
+    import urllib
 
-SSO_URL = "http://127.0.0.1:5010"
 
 @auth.before_app_request
 def before_request():
@@ -18,12 +21,13 @@ def before_request():
         return redirect(url_for('auth.join_team'))
 
 
-@auth.route('/login', methods=['GET', 'POST'])
+@auth.route('/login')
 def login():
-    ticket = request.args.get('ticket', None)
-    if ticket is not None:
-        name = _ticket2name(ticket)
-        user = User.query.filter_by(name=name).first()
+    SSO_URL = current_app.config['SSO_URL']
+    token = request.args.get('token', None)
+    if token is not None:
+        name = _token2name(token)
+        user = User.query.filter_by(name=name).first_or_404()
         if user:
             login_user(user)
             return redirect(request.args.get('next') or url_for('main.index'))
@@ -34,8 +38,8 @@ def login():
     return redirect(url_for('main.index'))
 
 
-def _ticket2name(ticket):
-    name = ticket.strip()
+def _token2name(token):
+    name = token.strip()
     return name
 
 
@@ -47,8 +51,9 @@ def logout():
     return redirect(url_for('main.index'))
 
 
-@auth.route('/register', methods=['GET', 'POST'])
+@auth.route('/register')
 def register():
+    SSO_URL = current_app.config['SSO_URL']
     if not current_user.is_authenticated:
         referer = urllib.parse.quote(url_for('.login', _external=True))
         return redirect(SSO_URL + "/register?referer=" + referer)
