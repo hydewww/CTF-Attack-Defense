@@ -49,17 +49,10 @@ def logout():
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        user = User(name=form.username.data,
-                    password=form.password.data,
-                    stu_id=form.stu_id.data
-                    )
-        db.session.add(user)
-        db.session.commit()
-        flash('Register Success.')
-        return redirect(url_for('auth.login'))
-    return render_template('auth/register.html', form=form)
+    if not current_user.is_authenticated:
+        referer = urllib.parse.quote(url_for('.login', _external=True))
+        return redirect(SSO_URL + "/register?referer=" + referer)
+    return redirect(url_for('main.index'))
 
 
 @auth.route('/join_team', methods=['GET', 'POST'])
