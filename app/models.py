@@ -151,7 +151,7 @@ class Solve(db.Model):
     team_name = db.Column(db.Integer, db.ForeignKey('teams.name'))
     flag_id = db.Column(db.String(64), db.ForeignKey('flags.id'))
     flag_used = db.Column(db.String(64))
-    date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    date = db.Column(db.DateTime, default=datetime.datetime.now)
 
     def __init__(self, team_name, flag_id, flag_used):
         self.team_name = team_name

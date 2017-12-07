@@ -1,15 +1,9 @@
-from flask import render_template, redirect, request, url_for, flash, current_app
-from flask_login import login_user, logout_user, login_required, \
-    current_user
+from flask import render_template, redirect, request, url_for, flash
+from flask_login import login_required, current_user
 from . import auth
 from .. import db
-from ..models import User, Team, Flag, Solve, Chal, Role
-from .forms import LoginForm, RegistrationForm, JoinTeamForm, CreateTeamForm
-try:
-    import urllib.parse
-except:
-    from urlparse import urlparse
-    import urllib
+from ..models import Team, Role
+from .forms import JoinTeamForm, CreateTeamForm
 
 
 @auth.before_app_request
@@ -21,48 +15,10 @@ def before_request():
         return redirect(url_for('auth.join_team'))
 
 
-@auth.route('/login')
-def login():
-    SSO_URL = current_app.config['SSO_URL']
-    token = request.args.get('token', None)
-    if token is not None:
-        name = _token2name(token)
-        user = User.query.filter_by(name=name).first_or_404()
-        if user:
-            login_user(user)
-            return redirect(request.args.get('next') or url_for('main.index'))
-    if not current_user.is_authenticated:
-        referer = urllib.parse.quote(url_for('.login', _external=True))
-        return redirect(SSO_URL + "/login?referer=" + referer)
-
-    return redirect(url_for('main.index'))
-
-
-def _token2name(token):
-    name = token.strip()
-    return name
-
-
-@auth.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    flash('You have been logged out.')
-    return redirect(url_for('main.index'))
-
-
-@auth.route('/register')
-def register():
-    SSO_URL = current_app.config['SSO_URL']
-    if not current_user.is_authenticated:
-        referer = urllib.parse.quote(url_for('.login', _external=True))
-        return redirect(SSO_URL + "/register?referer=" + referer)
-    return redirect(url_for('main.index'))
-
-
 @auth.route('/join_team', methods=['GET', 'POST'])
 @login_required
 def join_team():
+    print(current_user.id)
     form = JoinTeamForm()
     if form.validate_on_submit():
         team = Team.query.filter_by(key=form.teamkey.data).first()
