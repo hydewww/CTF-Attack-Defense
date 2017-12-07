@@ -8,15 +8,30 @@
 </div>
 <div>
     {% if current_user.is_authenticated %}
-    <p>Your Team: {{ current_user.team.name }}</p>
-    <p>Team Key: {{ current_user.team.key }}</p>
-    <p>Team Score: {{ current_user.team.score }}</p>
-    <br>
-    <div><b>Team Members:</b> 
-        {% for member in members %}
-            {{ member.user }}
+    <table class="table table-striped">
+        <tr>
+            <td>Team</td>
+            <td>{{ current_user.team.name }}</td>
+        </tr>
+        <tr>
+            <td>Team Key</td>
+            <td>{{ current_user.team.key }}</td>
+        </tr>
+        <tr>
+            <td>Score</td>
+            <td>{{ current_user.team.score }}</td>
+        </tr>
+        <tr>
+            <td>Team Members</td>
+            <td>{{ members[0].user }}</td>
+        </tr>
+        {% for member in members[1:] %}
+        <tr>
+            <td></td>
+            <td>{{ member.user }}</td>
+        </tr>
         {% endfor %}
-    </div>
+    </table>
     {% endif %}
 </div>
 {% endblock %}
