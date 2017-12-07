@@ -32,6 +32,12 @@ python timing.py
 
 
 
+# SSO
+
+将 [CTF-SSO](https://github.com/hydewww/CTF-SSO) 作为统一登录接口
+
+
+
 ---
 
 **说明: Scoreboard趋势图代码基于 [CTFd](https://github.com/CTFd/CTFd)**
